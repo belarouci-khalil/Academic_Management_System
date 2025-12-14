@@ -54,9 +54,26 @@ public class UserRepository implements IUserRepository {
     @Override
     public void update(User user) throws UserNotFoundException {
         Document doc = user.toDocument();
+        doc.remove("_id"); // Retirer _id du document avant l'update
+        
         Document filter = new Document("_id", new ObjectId(user.getId()));
         Document update = new Document("$set", doc);
-        update.remove("_id"); // Ne pas mettre à jour l'ID
+        
+        // Gérer les champs null pour les Student (comme groupId)
+        if (user instanceof Student) {
+            Student student = (Student) user;
+            Document unsetDoc = new Document();
+            
+            // Si groupId est null, on doit le retirer de la base de données
+            if (student.getGroupId() == null) {
+                unsetDoc.append("groupId", "");
+            }
+            
+            // Si on a des champs à unset, les ajouter à l'update
+            if (!unsetDoc.isEmpty()) {
+                update.append("$unset", unsetDoc);
+            }
+        }
         
         Document result = collection.findOneAndUpdate(filter, update);
         if (result == null) {

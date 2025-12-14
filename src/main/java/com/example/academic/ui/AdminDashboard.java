@@ -6,6 +6,9 @@ import com.example.academic.ui.pages.GroupsManagementPage;
 import com.example.academic.ui.pages.SubjectsManagementPage;
 import com.example.academic.ui.pages.TeachersManagementPage;
 import com.example.academic.ui.pages.StudentsManagementPage;
+import com.example.academic.ui.pages.AssignTeacherSubjectPage;
+import com.example.academic.ui.pages.AssignStudentGroupPage;
+import com.example.academic.ui.pages.AssignSubjectGroupPage;
 import com.example.academic.util.SessionManager;
 
 import javax.swing.*;
@@ -76,16 +79,14 @@ public class AdminDashboard extends JFrame {
         SubjectsManagementPage subjectsPage = new SubjectsManagementPage();
         mainContentPanel.add(subjectsPage, "subjects");
         
-        JPanel assignTeacherSubjectPage = new StyledPanel();
-        assignTeacherSubjectPage.add(new JLabel("Assigner Enseignant à Matière - À implémenter"));
+        // Pages d'assignation
+        AssignTeacherSubjectPage assignTeacherSubjectPage = new AssignTeacherSubjectPage();
         mainContentPanel.add(assignTeacherSubjectPage, "assignTeacherSubject");
         
-        JPanel assignStudentGroupPage = new StyledPanel();
-        assignStudentGroupPage.add(new JLabel("Assigner Étudiant à Groupe - À implémenter"));
+        AssignStudentGroupPage assignStudentGroupPage = new AssignStudentGroupPage();
         mainContentPanel.add(assignStudentGroupPage, "assignStudentGroup");
         
-        JPanel assignSubjectGroupPage = new StyledPanel();
-        assignSubjectGroupPage.add(new JLabel("Assigner Matière à Groupe - À implémenter"));
+        AssignSubjectGroupPage assignSubjectGroupPage = new AssignSubjectGroupPage();
         mainContentPanel.add(assignSubjectGroupPage, "assignSubjectGroup");
     }
 
@@ -124,11 +125,11 @@ public class AdminDashboard extends JFrame {
         sidebar.add(titleLabel);
 
         // Boutons de menu
-        addMenuButton(sidebar, "🏠 Accueil", "home");
-        addMenuButton(sidebar, "👥 Groupes", "groups");
-        addMenuButton(sidebar, "👨‍🏫 Enseignants", "teachers");
-        addMenuButton(sidebar, "🎓 Étudiants", "students");
-        addMenuButton(sidebar, "📚 Matières", "subjects");
+        addMenuButton(sidebar, " Accueil", "home");
+        addMenuButton(sidebar, " Groupes", "groups");
+        addMenuButton(sidebar, " Enseignants", "teachers");
+        addMenuButton(sidebar, " Étudiants", "students");
+        addMenuButton(sidebar, " Matières", "subjects");
         
         sidebar.add(Box.createVerticalStrut(20));
         

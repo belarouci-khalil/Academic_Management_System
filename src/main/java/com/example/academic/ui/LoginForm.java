@@ -10,9 +10,7 @@ import com.example.academic.util.SessionManager;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Formulaire de connexion - Interface moderne et élégante
- */
+
 public class LoginForm extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
@@ -288,4 +286,3 @@ public class LoginForm extends JFrame {
         });
     }
 }
-

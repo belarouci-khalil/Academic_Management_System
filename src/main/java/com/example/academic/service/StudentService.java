@@ -48,10 +48,30 @@ public class StudentService {
     public void assignToGroup(String studentId, String groupId) {
         try {
             Student student = findById(studentId);
+            String oldGroupId = student.getGroupId();
+            
+            // Convertir chaîne vide en null pour retirer du groupe
+            if (groupId != null && groupId.trim().isEmpty()) {
+                groupId = null;
+            }
+            
+            System.out.println("DEBUG assignToGroup: Étudiant " + student.getFirstName() + 
+                " - Ancien groupId: " + oldGroupId + " - Nouveau groupId: " + groupId);
+            
             student.setGroupId(groupId);
+            
+            // Mettre à jour dans la base de données
             userRepository.update(student);
+            
+            // Vérifier que ça a été sauvegardé
+            Student updated = findById(studentId);
+            System.out.println("DEBUG assignToGroup: Après update, groupId récupéré: " + updated.getGroupId());
         } catch (UserNotFoundException e) {
             throw new IllegalArgumentException("Étudiant non trouvé: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("DEBUG assignToGroup: Erreur: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Erreur lors de l'assignation au groupe: " + e.getMessage(), e);
         }
     }
 

@@ -54,18 +54,21 @@ public abstract class User {
         User user;
         switch (role) {
             case ADMIN:
+                // Administrator n'a pas de champs spécifiques, création directe
                 user = new Administrator(username, password, firstName, lastName);
+                user.setId(id);
                 break;
             case TEACHER:
-                user = new Teacher(username, password, firstName, lastName);
+                // Utiliser Teacher.fromDocument pour charger tous les champs spécifiques
+                user = Teacher.fromDocument(doc);
                 break;
             case STUDENT:
-                user = new Student(username, password, firstName, lastName);
+                // Utiliser Student.fromDocument pour charger tous les champs spécifiques (groupId, etc.)
+                user = Student.fromDocument(doc);
                 break;
             default:
                 throw new IllegalArgumentException("Role inconnu: " + role);
         }
-        user.setId(id);
         return user;
     }
 

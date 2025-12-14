@@ -92,9 +92,9 @@ public class TeacherDashboard extends JFrame {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 15, 10, 15));
         sidebar.add(titleLabel);
 
-        addMenuButton(sidebar, "🏠 Accueil", "home");
-        addMenuButton(sidebar, "➕ Ajouter Note", "addGrade");
-        addMenuButton(sidebar, "📊 Mes Notes", "viewGrades");
+        addMenuButton(sidebar, " Accueil", "home");
+        addMenuButton(sidebar, " Ajouter Note", "addGrade");
+        addMenuButton(sidebar, " Mes Notes", "viewGrades");
 
         sidebar.add(Box.createVerticalGlue());
         

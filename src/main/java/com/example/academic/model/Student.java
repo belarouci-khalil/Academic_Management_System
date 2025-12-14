@@ -57,7 +57,8 @@ public class Student extends User {
         if (studentNumber != null) {
             doc.append("studentNumber", studentNumber);
         }
-        if (groupId != null) {
+        // Inclure groupId seulement s'il n'est pas null
+        if (groupId != null && !groupId.trim().isEmpty()) {
             doc.append("groupId", groupId);
         }
         if (email != null) {
@@ -87,7 +88,9 @@ public class Student extends User {
             student.setStudentNumber(doc.getString("studentNumber"));
         }
         if (doc.containsKey("groupId")) {
-            student.setGroupId(doc.getString("groupId"));
+            String groupIdValue = doc.getString("groupId");
+            // Convertir chaîne vide en null
+            student.setGroupId(groupIdValue != null && !groupIdValue.trim().isEmpty() ? groupIdValue : null);
         }
         if (doc.containsKey("email")) {
             student.setEmail(doc.getString("email"));
