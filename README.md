@@ -339,8 +339,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+- GitHub: [@belarouci-khalil](https://github.com/belarouci-khalil)
+- Email: khalilbelarouci@gmail.com
 
 ## 🙏 Acknowledgments
 
@@ -356,9 +356,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **Classes**: 30+
 - **Design Patterns**: 5+
 - **Database Collections**: 5+
-
----
-
-⭐ **If you find this project helpful, please give it a star!** ⭐
 
 **Keywords**: Java, Swing, MongoDB, Academic Management System, Student Management, Grade Management, Desktop Application, OOP, Design Patterns, Maven, CRUD Operations, Role-Based Access Control
