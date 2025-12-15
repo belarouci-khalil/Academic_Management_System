@@ -28,7 +28,7 @@ public class LoginForm extends JFrame {
     }
 
     private void initializeComponents() {
-        setTitle("Système d'Information Académique");
+        setTitle("Academic Information System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(450, 550);
         setLocationRelativeTo(null);
@@ -52,12 +52,12 @@ public class LoginForm extends JFrame {
         ));
         passwordField.setBackground(Color.WHITE);
 
-        loginButton = new ModernButton("Se connecter", 
+        loginButton = new ModernButton("Login", 
             new Color(70, 130, 180), new Color(100, 149, 237), Color.WHITE);
         loginButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
         loginButton.setPreferredSize(new Dimension(200, 40));
 
-        cancelButton = new ModernButton("Annuler", 
+        cancelButton = new ModernButton("Cancel", 
             new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
         cancelButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         cancelButton.setPreferredSize(new Dimension(100, 35));
@@ -89,13 +89,13 @@ public class LoginForm extends JFrame {
         mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 50, 40, 50));
 
         // Logo/Titre
-        JLabel titleLabel = new JLabel("Système Académique");
+        JLabel titleLabel = new JLabel("Academic System");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 
-        JLabel subtitleLabel = new JLabel("Connexion");
+        JLabel subtitleLabel = new JLabel("Login");
         subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         subtitleLabel.setForeground(new Color(240, 240, 240));
         subtitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -112,13 +112,13 @@ public class LoginForm extends JFrame {
         formPanel.setMaximumSize(new Dimension(350, Integer.MAX_VALUE));
 
         // Labels avec style
-        JLabel usernameLabel = new JLabel("Nom d'utilisateur");
+        JLabel usernameLabel = new JLabel("Username");
         usernameLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
         usernameLabel.setForeground(new Color(70, 70, 70));
         usernameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         usernameLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 8, 0));
 
-        JLabel passwordLabel = new JLabel("Mot de passe");
+        JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
         passwordLabel.setForeground(new Color(70, 70, 70));
         passwordLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -146,7 +146,7 @@ public class LoginForm extends JFrame {
         formPanel.add(buttonPanel);
 
         // Info en bas
-        JLabel infoLabel = new JLabel("<html><center style='color: #888; font-size: 10px;'>Username = Prénom<br>Password = Nom (sensible à la casse)</center></html>");
+        JLabel infoLabel = new JLabel("<html><center style='color: #888; font-size: 10px;'>Username = First Name<br>Password = Last Name (case sensitive)</center></html>");
         infoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         infoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
@@ -210,13 +210,13 @@ public class LoginForm extends JFrame {
 
         // Validation
         if (username.isEmpty()) {
-            showError("Veuillez entrer un nom d'utilisateur");
+            showError("Please enter a username");
             usernameField.requestFocus();
             return;
         }
 
         if (password.isEmpty()) {
-            showError("Veuillez entrer un mot de passe");
+            showError("Please enter a password");
             passwordField.requestFocus();
             return;
         }
@@ -235,11 +235,11 @@ public class LoginForm extends JFrame {
             redirectToDashboard(user.getRole());
             
         } catch (InvalidCredentialsException e) {
-            showError("Nom d'utilisateur ou mot de passe incorrect");
+            showError("Incorrect username or password");
             passwordField.setText("");
             passwordField.requestFocus();
         } catch (Exception e) {
-            showError("Erreur: " + e.getMessage());
+            showError("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -259,7 +259,7 @@ public class LoginForm extends JFrame {
                 studentDashboard.setVisible(true);
                 break;
             default:
-                showError("Rôle non reconnu");
+                showError("Unrecognized role");
                 this.setVisible(true);
         }
     }

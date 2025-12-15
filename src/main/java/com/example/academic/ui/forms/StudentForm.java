@@ -37,7 +37,7 @@ public class StudentForm extends JDialog {
         this.existingStudent = existingStudent;
         this.onSaveCallback = onSaveCallback;
         
-        setTitle(existingStudent == null ? "Nouvel Étudiant" : "Modifier Étudiant");
+        setTitle(existingStudent == null ? "New Student" : "Edit Student");
         setSize(550, 600);
         setLocationRelativeTo(parent);
         initializeComponents();
@@ -70,7 +70,7 @@ public class StudentForm extends JDialog {
         
         groupCombo = new JComboBox<>();
         groupCombo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        groupCombo.addItem("Aucun groupe");
+        groupCombo.addItem("No group");
         try {
             java.util.List<com.example.academic.model.Group> groups = groupService.getAllGroups();
             for (com.example.academic.model.Group group : groups) {
@@ -80,8 +80,8 @@ public class StudentForm extends JDialog {
             // Ignorer
         }
         
-        saveButton = new ModernButton("Enregistrer", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
-        cancelButton = new ModernButton("Annuler", new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
+        saveButton = new ModernButton("Save", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
+        cancelButton = new ModernButton("Cancel", new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
 
         if (existingStudent != null) {
             firstNameField.setText(existingStudent.getFirstName());
@@ -117,7 +117,7 @@ public class StudentForm extends JDialog {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        JLabel titleLabel = new JLabel(existingStudent == null ? "Créer un nouvel étudiant" : "Modifier l'étudiant");
+        JLabel titleLabel = new JLabel(existingStudent == null ? "Create New Student" : "Edit Student");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -129,7 +129,7 @@ public class StudentForm extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        mainPanel.add(new JLabel("Prénom *:"), gbc);
+        mainPanel.add(new JLabel("First Name *:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
@@ -138,7 +138,7 @@ public class StudentForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Nom *:"), gbc);
+        mainPanel.add(new JLabel("Last Name *:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(lastNameField, gbc);
@@ -146,7 +146,7 @@ public class StudentForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Numéro étudiant:"), gbc);
+        mainPanel.add(new JLabel("Student Number:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(studentNumberField, gbc);
@@ -162,7 +162,7 @@ public class StudentForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Date de naissance:"), gbc);
+        mainPanel.add(new JLabel("Date of Birth:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(dateOfBirthField, gbc);
@@ -170,7 +170,7 @@ public class StudentForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Spécialité:"), gbc);
+        mainPanel.add(new JLabel("Specialty:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(specialtyField, gbc);
@@ -228,22 +228,22 @@ public class StudentForm extends JDialog {
         String section = sectionField.getText().trim();
 
         if (firstName.isEmpty() || lastName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Le prénom et le nom sont obligatoires", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "First name and last name are required", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validation email si fourni
         if (!email.isEmpty() && !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            JOptionPane.showMessageDialog(this, "Format d'email invalide", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid email format", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validation date si fournie
         if (!dateOfBirth.isEmpty() && !dateOfBirth.matches("^\\d{4}-\\d{2}-\\d{2}$")) {
-            JOptionPane.showMessageDialog(this, "Format de date invalide. Utilisez YYYY-MM-DD (ex: 2000-05-15)", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid date format. Use YYYY-MM-DD (ex: 2000-05-15)", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -274,8 +274,8 @@ public class StudentForm extends JDialog {
                 com.example.academic.repository.UserRepository userRepo = new com.example.academic.repository.UserRepository();
                 userRepo.update(student);
                 
-                JOptionPane.showMessageDialog(this, "Étudiant créé avec succès!\nUsername: " + firstName + "\nPassword: " + lastName, 
-                    "Succès", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Student created successfully!\nUsername: " + firstName + "\nPassword: " + lastName, 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 // Modifier
                 existingStudent.setFirstName(firstName);
@@ -290,8 +290,8 @@ public class StudentForm extends JDialog {
                 com.example.academic.repository.UserRepository userRepo = new com.example.academic.repository.UserRepository();
                 userRepo.update(existingStudent);
                 
-                JOptionPane.showMessageDialog(this, "Étudiant modifié avec succès!", 
-                    "Succès", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Student updated successfully!", 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             }
             
             if (onSaveCallback != null) {
@@ -299,8 +299,8 @@ public class StudentForm extends JDialog {
             }
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erreur: " + e.getMessage(), 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -32,7 +32,7 @@ public class TeacherForm extends JDialog {
         this.existingTeacher = existingTeacher;
         this.onSaveCallback = onSaveCallback;
         
-        setTitle(existingTeacher == null ? "Nouvel Enseignant" : "Modifier Enseignant");
+        setTitle(existingTeacher == null ? "New Teacher" : "Edit Teacher");
         setSize(500, 450);
         setLocationRelativeTo(parent);
         initializeComponents();
@@ -59,8 +59,8 @@ public class TeacherForm extends JDialog {
         phoneNumberField = new JTextField(25);
         phoneNumberField.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         
-        saveButton = new ModernButton("Enregistrer", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
-        cancelButton = new ModernButton("Annuler", new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
+        saveButton = new ModernButton("Save", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
+        cancelButton = new ModernButton("Cancel", new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
 
         if (existingTeacher != null) {
             firstNameField.setText(existingTeacher.getFirstName());
@@ -80,7 +80,7 @@ public class TeacherForm extends JDialog {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        JLabel titleLabel = new JLabel(existingTeacher == null ? "Créer un nouvel enseignant" : "Modifier l'enseignant");
+        JLabel titleLabel = new JLabel(existingTeacher == null ? "Create New Teacher" : "Edit Teacher");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -92,7 +92,7 @@ public class TeacherForm extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        mainPanel.add(new JLabel("Prénom *:"), gbc);
+        mainPanel.add(new JLabel("First Name *:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
@@ -101,7 +101,7 @@ public class TeacherForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Nom *:"), gbc);
+        mainPanel.add(new JLabel("Name *:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(lastNameField, gbc);
@@ -109,7 +109,7 @@ public class TeacherForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Numéro employé:"), gbc);
+        mainPanel.add(new JLabel("Employee Number:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(employeeNumberField, gbc);
@@ -125,7 +125,7 @@ public class TeacherForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Département/Spécialité:"), gbc);
+        mainPanel.add(new JLabel("Department/Specialty:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(departmentField, gbc);
@@ -133,7 +133,7 @@ public class TeacherForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Téléphone:"), gbc);
+        mainPanel.add(new JLabel("Phone:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(phoneNumberField, gbc);
@@ -171,15 +171,15 @@ public class TeacherForm extends JDialog {
         String phoneNumber = phoneNumberField.getText().trim();
 
         if (firstName.isEmpty() || lastName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Le prénom et le nom sont obligatoires", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "First name and last name are required", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validation email si fourni
         if (!email.isEmpty() && !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            JOptionPane.showMessageDialog(this, "Format d'email invalide", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid email format", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -196,8 +196,8 @@ public class TeacherForm extends JDialog {
                 com.example.academic.repository.UserRepository userRepo = new com.example.academic.repository.UserRepository();
                 userRepo.update(teacher);
                 
-                JOptionPane.showMessageDialog(this, "Enseignant créé avec succès!\nUsername: " + firstName + "\nPassword: " + lastName, 
-                    "Succès", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Teacher created successfully!\nUsername: " + firstName + "\nPassword: " + lastName, 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 // Modifier
                 existingTeacher.setFirstName(firstName);
@@ -210,8 +210,8 @@ public class TeacherForm extends JDialog {
                 com.example.academic.repository.UserRepository userRepo = new com.example.academic.repository.UserRepository();
                 userRepo.update(existingTeacher);
                 
-                JOptionPane.showMessageDialog(this, "Enseignant modifié avec succès!", 
-                    "Succès", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Teacher updated successfully!", 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             }
             
             if (onSaveCallback != null) {
@@ -219,8 +219,8 @@ public class TeacherForm extends JDialog {
             }
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erreur: " + e.getMessage(), 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

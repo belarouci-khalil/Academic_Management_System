@@ -28,7 +28,7 @@ public class GroupForm extends JDialog {
         this.existingGroup = existingGroup;
         this.onSaveCallback = onSaveCallback;
         
-        setTitle(existingGroup == null ? "Nouveau Groupe" : "Modifier Groupe");
+        setTitle(existingGroup == null ? "New Group" : "Edit Group");
         setSize(500, 300);
         setLocationRelativeTo(parent);
         initializeComponents();
@@ -45,8 +45,8 @@ public class GroupForm extends JDialog {
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
         
-        saveButton = new ModernButton("Enregistrer", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
-        cancelButton = new ModernButton("Annuler", new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
+        saveButton = new ModernButton("Save", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
+        cancelButton = new ModernButton("Cancel", new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
 
         if (existingGroup != null) {
             nameField.setText(existingGroup.getName());
@@ -63,7 +63,7 @@ public class GroupForm extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
 
         // Titre
-        JLabel titleLabel = new JLabel(existingGroup == null ? "Créer un nouveau groupe" : "Modifier le groupe");
+        JLabel titleLabel = new JLabel(existingGroup == null ? "Create New Group" : "Edit Group");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -76,7 +76,7 @@ public class GroupForm extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        JLabel nameLabel = new JLabel("Nom du groupe *:");
+        JLabel nameLabel = new JLabel("Group Name *:");
         nameLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         mainPanel.add(nameLabel, gbc);
         gbc.gridx = 1;
@@ -126,8 +126,8 @@ public class GroupForm extends JDialog {
         String description = descriptionArea.getText().trim();
 
         if (name.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Le nom du groupe est obligatoire", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Group name is required", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             nameField.requestFocus();
             return;
         }
@@ -136,15 +136,15 @@ public class GroupForm extends JDialog {
             if (existingGroup == null) {
                 // Créer
                 groupService.createGroup(name, description);
-                JOptionPane.showMessageDialog(this, "Groupe créé avec succès!", 
-                    "Succès", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Group created successfully!", 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 // Modifier
                 existingGroup.setName(name);
                 existingGroup.setDescription(description);
                 groupService.updateGroup(existingGroup);
-                JOptionPane.showMessageDialog(this, "Groupe modifié avec succès!", 
-                    "Succès", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Group updated successfully!", 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             }
             
             if (onSaveCallback != null) {
@@ -152,8 +152,8 @@ public class GroupForm extends JDialog {
             }
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erreur: " + e.getMessage(), 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

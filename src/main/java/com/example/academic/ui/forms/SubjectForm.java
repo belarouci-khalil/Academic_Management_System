@@ -29,7 +29,7 @@ public class SubjectForm extends JDialog {
         this.existingSubject = existingSubject;
         this.onSaveCallback = onSaveCallback;
         
-        setTitle(existingSubject == null ? "Nouvelle Matière" : "Modifier Matière");
+        setTitle(existingSubject == null ? "New Subject" : "Edit Subject");
         setSize(500, 350);
         setLocationRelativeTo(parent);
         initializeComponents();
@@ -49,8 +49,8 @@ public class SubjectForm extends JDialog {
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
         
-        saveButton = new ModernButton("Enregistrer", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
-        cancelButton = new ModernButton("Annuler", new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
+        saveButton = new ModernButton("Save", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
+        cancelButton = new ModernButton("Cancel", new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
 
         if (existingSubject != null) {
             nameField.setText(existingSubject.getName());
@@ -69,7 +69,7 @@ public class SubjectForm extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
 
         // Titre
-        JLabel titleLabel = new JLabel(existingSubject == null ? "Créer une nouvelle matière" : "Modifier la matière");
+        JLabel titleLabel = new JLabel(existingSubject == null ? "Create New Subject" : "Edit Subject");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -144,15 +144,15 @@ public class SubjectForm extends JDialog {
         String description = descriptionArea.getText().trim();
 
         if (name.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Le nom est obligatoire", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Name is required", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             nameField.requestFocus();
             return;
         }
 
         if (code.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Le code est obligatoire", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Code is required", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             codeField.requestFocus();
             return;
         }
@@ -161,15 +161,15 @@ public class SubjectForm extends JDialog {
             if (existingSubject == null) {
                 // Créer
                 subjectService.createSubject(name, code, description);
-                JOptionPane.showMessageDialog(this, "Matière créée avec succès!", 
-                    "Succès", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Subject created successfully!", 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 // Modifier
                 existingSubject.setName(name);
                 existingSubject.setDescription(description);
                 subjectService.updateSubject(existingSubject);
-                JOptionPane.showMessageDialog(this, "Matière modifiée avec succès!", 
-                    "Succès", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Subject updated successfully!", 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             }
             
             if (onSaveCallback != null) {
@@ -177,8 +177,8 @@ public class SubjectForm extends JDialog {
             }
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erreur: " + e.getMessage(), 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

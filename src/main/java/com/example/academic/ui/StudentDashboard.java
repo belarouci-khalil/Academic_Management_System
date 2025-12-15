@@ -28,13 +28,13 @@ public class StudentDashboard extends JFrame {
     }
 
     private void initializeComponents() {
-        setTitle("Dashboard Étudiant - Système Académique");
+        setTitle("Student Dashboard - Academic System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1200, 700);
         setLocationRelativeTo(null);
 
         if (!SessionManager.getInstance().isLoggedIn()) {
-            JOptionPane.showMessageDialog(this, "Session expirée. Veuillez vous reconnecter.");
+            JOptionPane.showMessageDialog(this, "Session expired. Please log in again.");
             dispose();
             new LoginForm().setVisible(true);
             return;
@@ -70,7 +70,7 @@ public class StudentDashboard extends JFrame {
         welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         welcomeLabel.setForeground(Color.WHITE);
         
-        ModernButton logoutButton = new ModernButton("Déconnexion", 
+        ModernButton logoutButton = new ModernButton("Logout", 
             new Color(198, 40, 40), new Color(211, 47, 47), Color.WHITE);
         logoutButton.addActionListener(e -> handleLogout());
         
@@ -92,8 +92,8 @@ public class StudentDashboard extends JFrame {
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 15, 10, 15));
         sidebar.add(titleLabel);
 
-        addMenuButton(sidebar, " Accueil", "home");
-        addMenuButton(sidebar, " Mes Notes", "viewGrades");
+        addMenuButton(sidebar, " Home", "home");
+        addMenuButton(sidebar, " My Grades", "viewGrades");
 
         sidebar.add(Box.createVerticalGlue());
         
@@ -121,7 +121,7 @@ public class StudentDashboard extends JFrame {
         JPanel homePanel = new StyledPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
-        JLabel welcomeLabel = new JLabel("Bienvenue dans votre Dashboard");
+        JLabel welcomeLabel = new JLabel("Welcome to your Dashboard");
         welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         welcomeLabel.setForeground(new Color(70, 130, 180));
         gbc.gridx = 0;
@@ -129,7 +129,7 @@ public class StudentDashboard extends JFrame {
         gbc.insets = new Insets(20, 20, 20, 20);
         homePanel.add(welcomeLabel, gbc);
         
-        JLabel infoLabel = new JLabel("<html><center>Consultez vos notes dans la section 'Mes Notes'</center></html>");
+        JLabel infoLabel = new JLabel("<html><center>View your grades in the 'My Grades' section</center></html>");
         infoLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         gbc.gridy = 1;
         homePanel.add(infoLabel, gbc);
@@ -146,7 +146,7 @@ public class StudentDashboard extends JFrame {
     private JPanel createGradesPanel() {
         StyledPanel panel = new StyledPanel(new BorderLayout(10, 10));
         
-        JLabel titleLabel = new JLabel("Mes Notes");
+        JLabel titleLabel = new JLabel("My Grades");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         titleLabel.setForeground(new Color(70, 130, 180));
         
@@ -155,7 +155,7 @@ public class StudentDashboard extends JFrame {
         
         // Filtre par matière
         JComboBox<String> subjectFilter = new JComboBox<>();
-        subjectFilter.addItem("Toutes les matières");
+        subjectFilter.addItem("All Subjects");
         try {
             SubjectService subjectService = new SubjectService();
             List<com.example.academic.model.Subject> subjects = subjectService.getAllSubjects();
@@ -169,16 +169,16 @@ public class StudentDashboard extends JFrame {
         subjectFilter.addActionListener(e -> refreshGradesTable((DefaultTableModel) ((JTable) ((JScrollPane) panel.getComponent(1)).getViewport().getView()).getModel(), subjectFilter));
         
         JPanel filterPanel = new StyledPanel(new FlowLayout(FlowLayout.LEFT));
-        filterPanel.add(new JLabel("Filtrer par matière: "));
+        filterPanel.add(new JLabel("Filter by subject: "));
         filterPanel.add(subjectFilter);
         
-        ModernButton refreshButton = new ModernButton("Actualiser", new Color(70, 130, 180), new Color(100, 149, 237), Color.WHITE);
+        ModernButton refreshButton = new ModernButton("Refresh", new Color(70, 130, 180), new Color(100, 149, 237), Color.WHITE);
         refreshButton.addActionListener(e -> refreshGradesTable((DefaultTableModel) ((JTable) ((JScrollPane) panel.getComponent(1)).getViewport().getView()).getModel(), subjectFilter));
         filterPanel.add(refreshButton);
         
         topPanel.add(filterPanel, BorderLayout.EAST);
         
-        String[] columns = {"Matière", "Note", "Enseignant", "Commentaire", "Date"};
+        String[] columns = {"Subject", "Grade", "Teacher", "Comment", "Date"};
         DefaultTableModel model = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -194,7 +194,7 @@ public class StudentDashboard extends JFrame {
         table.getTableHeader().setForeground(Color.WHITE);
         
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBorder(BorderFactory.createTitledBorder("Liste des Notes"));
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Grades List"));
         
         panel.add(topPanel, BorderLayout.NORTH);
         panel.add(scrollPane, BorderLayout.CENTER);
@@ -221,7 +221,7 @@ public class StudentDashboard extends JFrame {
                     subjectName = subject.getName();
                     
                     // Filtrer si une matière est sélectionnée
-                    if (selectedSubject != null && !selectedSubject.equals("Toutes les matières") && !selectedSubject.equals(subjectName)) {
+                    if (selectedSubject != null && !selectedSubject.equals("All Subjects") && !selectedSubject.equals(subjectName)) {
                         continue;
                     }
                 } catch (Exception e) {}
@@ -241,15 +241,15 @@ public class StudentDashboard extends JFrame {
                 });
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erreur lors du chargement: " + e.getMessage(), 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void handleLogout() {
         int confirm = JOptionPane.showConfirmDialog(this, 
-            "Êtes-vous sûr de vouloir vous déconnecter ?", 
-            "Déconnexion", JOptionPane.YES_NO_OPTION);
+            "Are you sure you want to log out?",
+            "Logout", JOptionPane.YES_NO_OPTION);
         
         if (confirm == JOptionPane.YES_OPTION) {
             SessionManager.getInstance().logout();

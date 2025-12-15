@@ -44,7 +44,7 @@ public class GradeForm extends JDialog {
         this.studentService = new StudentService();
         this.subjectService = new SubjectService();
         
-        setTitle(existingGrade == null ? "Ajouter une Note" : "Modifier une Note");
+        setTitle(existingGrade == null ? "Add Grade" : "Edit Grade");
         setSize(500, 400);
         setLocationRelativeTo(parent);
         initializeComponents();
@@ -68,8 +68,8 @@ public class GradeForm extends JDialog {
         commentArea.setLineWrap(true);
         commentArea.setWrapStyleWord(true);
         
-        saveButton = new ModernButton("Enregistrer", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
-        cancelButton = new ModernButton("Annuler", new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
+        saveButton = new ModernButton("Save", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
+        cancelButton = new ModernButton("Cancel", new Color(158, 158, 158), new Color(189, 189, 189), Color.WHITE);
     }
 
     private void loadData() {
@@ -98,8 +98,8 @@ public class GradeForm extends JDialog {
                 // Sélectionner les combos
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erreur lors du chargement: " + e.getMessage(), 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error loading data: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -111,7 +111,7 @@ public class GradeForm extends JDialog {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.WEST;
 
-        JLabel titleLabel = new JLabel(existingGrade == null ? "Ajouter une note" : "Modifier la note");
+        JLabel titleLabel = new JLabel(existingGrade == null ? "Add Grade" : "Edit Grade");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -123,7 +123,7 @@ public class GradeForm extends JDialog {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        mainPanel.add(new JLabel("Étudiant *:"), gbc);
+        mainPanel.add(new JLabel("Student *:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
@@ -132,7 +132,7 @@ public class GradeForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Matière *:"), gbc);
+        mainPanel.add(new JLabel("Subject *:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(subjectCombo, gbc);
@@ -140,7 +140,7 @@ public class GradeForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Note (0-20) *:"), gbc);
+        mainPanel.add(new JLabel("Grade (0-20) *:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(gradeField, gbc);
@@ -148,7 +148,7 @@ public class GradeForm extends JDialog {
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.NONE;
-        mainPanel.add(new JLabel("Commentaire:"), gbc);
+        mainPanel.add(new JLabel("Comment:"), gbc);
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 1.0;
@@ -180,21 +180,21 @@ public class GradeForm extends JDialog {
 
     private void handleSave() {
         if (studentCombo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(this, "Veuillez sélectionner un étudiant", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a student", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (subjectCombo.getSelectedIndex() == -1) {
-            JOptionPane.showMessageDialog(this, "Veuillez sélectionner une matière", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select a subject", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         String gradeText = gradeField.getText().trim();
         if (gradeText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Veuillez entrer une note", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter a grade", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -205,8 +205,8 @@ public class GradeForm extends JDialog {
                 throw new NumberFormatException();
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "La note doit être un nombre entre 0 et 20", 
-                "Erreur de validation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "The grade must be a number between 0 and 20", 
+                "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -222,13 +222,13 @@ public class GradeForm extends JDialog {
             if (existingGrade == null) {
                 // Créer
                 gradeService.addGrade(studentId, subjectId, teacherId, grade, comment);
-                JOptionPane.showMessageDialog(this, "Note ajoutée avec succès!", 
-                    "Succès", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Grade ajoutée avec succès!", 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 // Modifier
                 gradeService.updateGrade(existingGrade.getId(), grade, comment);
-                JOptionPane.showMessageDialog(this, "Note modifiée avec succès!", 
-                    "Succès", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Grade modifiée avec succès!", 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
             }
             
             if (onSaveCallback != null) {
@@ -236,8 +236,8 @@ public class GradeForm extends JDialog {
             }
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erreur: " + e.getMessage(), 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -27,14 +27,14 @@ public class AdminDashboard extends JFrame {
     }
 
     private void initializeComponents() {
-        setTitle("Dashboard Administrateur - Système Académique");
+        setTitle("Administrator Dashboard - Academic System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1200, 700);
         setLocationRelativeTo(null);
 
         // Vérifier la session
         if (!SessionManager.getInstance().isLoggedIn()) {
-            JOptionPane.showMessageDialog(this, "Session expirée. Veuillez vous reconnecter.");
+            JOptionPane.showMessageDialog(this, "Session expired. Please log in again.");
             dispose();
             new LoginForm().setVisible(true);
             return;
@@ -101,7 +101,7 @@ public class AdminDashboard extends JFrame {
         welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         welcomeLabel.setForeground(Color.WHITE);
         
-        ModernButton logoutButton = new ModernButton("Déconnexion", 
+        ModernButton logoutButton = new ModernButton("Logout", 
             new Color(198, 40, 40), new Color(211, 47, 47), Color.WHITE);
         logoutButton.addActionListener(e -> handleLogout());
         
@@ -125,11 +125,11 @@ public class AdminDashboard extends JFrame {
         sidebar.add(titleLabel);
 
         // Boutons de menu
-        addMenuButton(sidebar, " Accueil", "home");
-        addMenuButton(sidebar, " Groupes", "groups");
-        addMenuButton(sidebar, " Enseignants", "teachers");
-        addMenuButton(sidebar, " Étudiants", "students");
-        addMenuButton(sidebar, " Matières", "subjects");
+        addMenuButton(sidebar, " Home", "home");
+        addMenuButton(sidebar, " Groups", "groups");
+        addMenuButton(sidebar, " Teachers", "teachers");
+        addMenuButton(sidebar, " Students", "students");
+        addMenuButton(sidebar, " Subjects", "subjects");
         
         sidebar.add(Box.createVerticalStrut(20));
         
@@ -139,9 +139,9 @@ public class AdminDashboard extends JFrame {
         assignTitle.setForeground(new Color(100, 100, 100));
         sidebar.add(assignTitle);
         
-        addMenuButton(sidebar, "🔗 Enseignant → Matière", "assignTeacherSubject");
-        addMenuButton(sidebar, "🔗 Étudiant → Groupe", "assignStudentGroup");
-        addMenuButton(sidebar, "🔗 Matière → Groupe", "assignSubjectGroup");
+        addMenuButton(sidebar, "🔗 Teacher → Subject", "assignTeacherSubject");
+        addMenuButton(sidebar, "🔗 Student → Group", "assignStudentGroup");
+        addMenuButton(sidebar, "🔗 Subject → Group", "assignSubjectGroup");
 
         sidebar.add(Box.createVerticalGlue());
         
@@ -200,7 +200,7 @@ public class AdminDashboard extends JFrame {
         JPanel homePanel = new StyledPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
-        JLabel welcomeLabel = new JLabel("Bienvenue dans le Système d'Information Académique");
+        JLabel welcomeLabel = new JLabel("Welcome to the Academic Information System");
         welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         welcomeLabel.setForeground(new Color(70, 130, 180));
         gbc.gridx = 0;
@@ -208,7 +208,7 @@ public class AdminDashboard extends JFrame {
         gbc.insets = new Insets(20, 20, 20, 20);
         homePanel.add(welcomeLabel, gbc);
         
-        JLabel infoLabel = new JLabel("<html><center>Sélectionnez une option dans le menu de gauche pour commencer</center></html>");
+        JLabel infoLabel = new JLabel("<html><center>Select an option from the left menu to get started</center></html>");
         infoLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         gbc.gridy = 1;
         homePanel.add(infoLabel, gbc);
@@ -219,8 +219,8 @@ public class AdminDashboard extends JFrame {
 
     private void handleLogout() {
         int confirm = JOptionPane.showConfirmDialog(this, 
-            "Êtes-vous sûr de vouloir vous déconnecter ?", 
-            "Déconnexion", JOptionPane.YES_NO_OPTION);
+            "Are you sure you want to log out?",
+            "Logout", JOptionPane.YES_NO_OPTION);
         
         if (confirm == JOptionPane.YES_OPTION) {
             SessionManager.getInstance().logout();

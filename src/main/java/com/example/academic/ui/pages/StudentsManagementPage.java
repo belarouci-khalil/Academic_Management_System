@@ -76,21 +76,21 @@ public class StudentsManagementPage extends StyledPanel {
         
         searchField = new JTextField(20);
         searchField.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        searchField.setBorder(BorderFactory.createTitledBorder("Rechercher"));
+        searchField.setBorder(BorderFactory.createTitledBorder("Search"));
     }
 
     private void setupLayout() {
         JPanel topPanel = new StyledPanel(new BorderLayout());
         
-        JLabel titleLabel = new JLabel("Gestion des Étudiants");
+        JLabel titleLabel = new JLabel("Students Management");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         titleLabel.setForeground(new Color(70, 130, 180));
         
         JPanel buttonPanel = new StyledPanel(new FlowLayout(FlowLayout.RIGHT));
-        ModernButton addButton = new ModernButton("Ajouter", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
-        ModernButton editButton = new ModernButton("Modifier", new Color(255, 152, 0), new Color(255, 167, 38), Color.WHITE);
-        ModernButton deleteButton = new ModernButton("Supprimer", new Color(198, 40, 40), new Color(211, 47, 47), Color.WHITE);
-        ModernButton refreshButton = new ModernButton("Actualiser", new Color(70, 130, 180), new Color(100, 149, 237), Color.WHITE);
+        ModernButton addButton = new ModernButton("Add", new Color(46, 125, 50), new Color(56, 142, 60), Color.WHITE);
+        ModernButton editButton = new ModernButton("Edit", new Color(255, 152, 0), new Color(255, 167, 38), Color.WHITE);
+        ModernButton deleteButton = new ModernButton("Delete", new Color(198, 40, 40), new Color(211, 47, 47), Color.WHITE);
+        ModernButton refreshButton = new ModernButton("Refresh", new Color(70, 130, 180), new Color(100, 149, 237), Color.WHITE);
         
         buttonPanel.add(addButton);
         buttonPanel.add(editButton);
@@ -101,7 +101,7 @@ public class StudentsManagementPage extends StyledPanel {
         topPanel.add(buttonPanel, BorderLayout.EAST);
         
         JPanel searchPanel = new StyledPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        JLabel searchLabel = new JLabel("Rechercher:");
+        JLabel searchLabel = new JLabel("Search:");
         searchLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         searchPanel.add(searchLabel);
         searchField.setBorder(javax.swing.BorderFactory.createCompoundBorder(
@@ -113,7 +113,7 @@ public class StudentsManagementPage extends StyledPanel {
         JScrollPane scrollPane = new JScrollPane(studentsTable);
         scrollPane.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(),
-            "Liste des Étudiants",
+            "Students List",
             0, 0,
             new Font("Segoe UI", Font.BOLD, 12)
         ));
@@ -162,8 +162,8 @@ public class StudentsManagementPage extends StyledPanel {
                 });
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erreur lors du chargement: " + e.getMessage(), 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error lors du chargement: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -196,8 +196,8 @@ public class StudentsManagementPage extends StyledPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erreur lors de la recherche: " + e.getMessage(), 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error lors de la recherche: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -210,7 +210,7 @@ public class StudentsManagementPage extends StyledPanel {
     private void handleEdit() {
         int selectedRow = studentsTable.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Veuillez sélectionner un étudiant à modifier", 
+            JOptionPane.showMessageDialog(this, "Please sélectionner un étudiant à modifier", 
                 "Aucune sélection", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -226,21 +226,21 @@ public class StudentsManagementPage extends StyledPanel {
                 form.setVisible(true);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erreur: " + e.getMessage(), 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void handleDelete() {
         int selectedRow = studentsTable.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Veuillez sélectionner un étudiant à supprimer", 
+            JOptionPane.showMessageDialog(this, "Please sélectionner un étudiant à supprimer", 
                 "Aucune sélection", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
         int confirm = JOptionPane.showConfirmDialog(this, 
-            "Êtes-vous sûr de vouloir supprimer cet étudiant ?", 
+            "Are you sure de vouloir supprimer this student ?", 
             "Confirmation", JOptionPane.YES_NO_OPTION);
         
         if (confirm == JOptionPane.YES_OPTION) {
@@ -249,12 +249,12 @@ public class StudentsManagementPage extends StyledPanel {
                 com.example.academic.service.UserService userService = new com.example.academic.service.UserService();
                 com.example.academic.model.User user = userService.findByUsername(firstName); // username = firstName
                 userService.deleteUser(user.getId());
-                JOptionPane.showMessageDialog(this, "Étudiant supprimé avec succès!", 
+                JOptionPane.showMessageDialog(this, "Student supprimé avec succès!", 
                     "Succès", JOptionPane.INFORMATION_MESSAGE);
                 loadStudents();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erreur: " + e.getMessage(), 
-                    "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
